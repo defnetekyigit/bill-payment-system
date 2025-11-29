@@ -10,7 +10,11 @@ const options = {
       version: "1.0.0",
       description: "SE4458 Midterm Project - Bill Payment APIs",
     },
-    servers: [{ url: "http://localhost:3000/api/v1" }],
+    servers: [
+      {
+        url: "https://billpayment-api-cnh8fubqbegrf5cm.francecentral-01.azurewebsites.net",
+      },
+    ],
   },
   apis: [`${__dirname}/../routes/*.{ts,js}`],
 };

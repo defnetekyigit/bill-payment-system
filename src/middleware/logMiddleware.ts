@@ -5,6 +5,16 @@ import path from "path";
 export const logMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const start = Date.now();
 
+  const logDir = path.join(__dirname, "../logs");
+
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+  }
+
+  const requestLogPath = path.join(logDir, "requests.log");
+  const responseLogPath = path.join(logDir, "responses.log");
+
+  // Request log
   const logRequest = {
     time: new Date().toISOString(),
     method: req.method,
@@ -14,11 +24,9 @@ export const logMiddleware = (req: Request, res: Response, next: NextFunction) =
     bodySize: JSON.stringify(req.body)?.length || 0,
   };
 
-  fs.appendFileSync(
-    path.join(__dirname, "../../logs/requests.log"),
-    JSON.stringify(logRequest) + "\n"
-  );
+  fs.appendFileSync(requestLogPath, JSON.stringify(logRequest) + "\n");
 
+  // Response log
   res.on("finish", () => {
     const latency = Date.now() - start;
 
@@ -29,10 +37,7 @@ export const logMiddleware = (req: Request, res: Response, next: NextFunction) =
       responseSize: res.getHeader("Content-Length") || 0,
     };
 
-    fs.appendFileSync(
-      path.join(__dirname, "../../logs/responses.log"),
-      JSON.stringify(logResponse) + "\n"
-    );
+    fs.appendFileSync(responseLogPath, JSON.stringify(logResponse) + "\n");
   });
 
   next();
