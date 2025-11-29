@@ -1,6 +1,6 @@
 {
   "name": "bill-payment-system",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
