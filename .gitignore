@@ -1,0 +1,77 @@
+# -------------------------------
+# Node Modules & ENV Files
+# -------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+logs/*.log
+debug.log
+npm-debug.log
+yarn-debug.log
+pnpm-debug.log
+
+
+# Diagnostic reports
+reports/
+*.report
+*.dmp
+
+# -------------------------------
+# TypeScript
+# -------------------------------
+dist/
+build/
+out/
+tmp/
+temp/
+
+# TS cache
+*.tsbuildinfo
+
+# VSCode
+.vscode/
+.idea/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# -------------------------------
+# OS / Editor / Misc
+# -------------------------------
+*.swp
+*.swo
+*.tmp
+
+# Swagger generated JS 
+swagger/*.js
+swagger/*.yaml
+
+# Uploaded files (CSV etc)
+uploads/
+*.csv
+
+# Coverage
+coverage/
+*.lcov
+
+# GitHub Actions artifacts
+*.artifact
+*.gz
+
+# Azure specific
+.ssh/
+*.pub
+
+# Root logs folder your logger uses
+logs/
