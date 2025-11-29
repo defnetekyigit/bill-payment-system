@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://billpayment-api-cnh8fubqbegrf5cm.francecentral-01.azurewebsites.net",
+        url: "https://billpayment-api-cnh8fubqbegrf5cm.francecentral-01.azurewebsites.net/api/v1",
       },
     ],
   },
