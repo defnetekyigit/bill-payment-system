@@ -1,11 +1,7 @@
 import { Request, Response } from "express";
 import { csvUploadService } from "../services/csvUploadService";
 
-interface MulterRequest extends Request {
-  file: any;
-}
-
-export const csvUploadController = async (req: MulterRequest, res: Response) => {
+export const csvUploadController = async (req: Request, res: Response) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "CSV file is required" });
