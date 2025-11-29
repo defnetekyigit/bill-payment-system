@@ -23,7 +23,6 @@ export const rateLimitMiddleware = (
   const record = rateLimitStore[subscriber_no];
 
   if (record.date !== today) {
-    // yeni gün → reset
     rateLimitStore[subscriber_no] = { count: 1, date: today };
     return next();
   }

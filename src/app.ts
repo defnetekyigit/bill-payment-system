@@ -15,10 +15,9 @@ app.use(cors({
 }));
 app.use(logMiddleware);
 
-app.get("/health", (req, res) => {
-  res.json({ ok: true });
-});
 setupSwagger(app);
+
+// Auth routes
 app.use("/api/v1", authRoutes);
 
 // Bill routes

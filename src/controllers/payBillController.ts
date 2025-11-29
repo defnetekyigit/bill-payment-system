@@ -11,7 +11,7 @@ export const payBillController = async (req: Request, res: Response) => {
       });
     }
 
-    const result = await payBillService(subscriber_no, month, amount);
+    const result = await payBillService(subscriber_no, month, Number(amount));
 
     if (!result.success) {
       return res.status(400).json({ error: result.message });

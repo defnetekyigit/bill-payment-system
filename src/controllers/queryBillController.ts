@@ -14,6 +14,9 @@ export const queryBillController = async (req: Request, res: Response) => {
 
     const bill = await queryBillService(subscriber_no, month);
 
+    if (bill.error) {
+      return res.status(400).json({ message: bill.error });
+    }
     if (!bill) {
       return res.status(404).json({ error: "Bill not found" });
     }
@@ -26,6 +29,7 @@ export const queryBillController = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error("QueryBill Error:", err);
+
     return res.status(500).json({ error: "Server error" });
   }
 };
