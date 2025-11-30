@@ -25,6 +25,7 @@ export const logMiddleware = (req: Request, res: Response, next: NextFunction) =
   };
 
   fs.appendFileSync(requestLogPath, JSON.stringify(logRequest) + "\n");
+  console.log("Incoming Request:", logRequest);
 
   // Response log
   res.on("finish", () => {
@@ -38,6 +39,7 @@ export const logMiddleware = (req: Request, res: Response, next: NextFunction) =
     };
 
     fs.appendFileSync(responseLogPath, JSON.stringify(logResponse) + "\n");
+    console.log("Outgoing Response:", logResponse);
   });
 
   next();

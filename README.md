@@ -48,9 +48,6 @@ src/
  ├── controllers/
  ├── routes/
  ├── middleware/
- │    ├── authMiddleware.ts
- │    ├── rateLimitMiddleware.ts
- │    └── logMiddleware.ts
  ├── services/
  ├── swagger/
  ├── utils/
@@ -58,8 +55,6 @@ src/
  └── server.ts
 dist/  
 logs/
- ├── requests.log
- └── responses.log
 package.json
 tsconfig.json
 
