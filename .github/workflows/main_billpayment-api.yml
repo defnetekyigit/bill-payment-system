@@ -33,8 +33,8 @@ jobs:
         run: |
           mkdir deploy
           cp -r dist deploy/dist
-          cp package.json deploy/
           cp -r node_modules deploy/node_modules
+          cp package.json deploy/
           cp -r src/swagger deploy/swagger || true
 
       - name: Upload artifact
@@ -67,7 +67,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'billpayment-api'
+          app-name: 'billpayment-api-v2'
           slot-name: 'Production'
           package: .
           
