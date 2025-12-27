@@ -34,6 +34,7 @@ jobs:
           mkdir deploy
           cp -r dist deploy/dist
           cp package.json deploy/
+          cp -r node_modules deploy/node_modules
           cp -r src/swagger deploy/swagger || true
 
       - name: Upload artifact
