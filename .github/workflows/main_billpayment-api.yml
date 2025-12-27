@@ -55,19 +55,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deploy-package
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_2F8CF8493B05473B9A5B02DD2D844F30 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B9623A0B4F224D0E8BF3C2FDE408E440 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_65B003CC76A5443EB140819C8F852622 }}
-
+    
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'billpayment-api-v2'
-          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
           
