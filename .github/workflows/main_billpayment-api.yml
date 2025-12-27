@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action:
-# https://github.com/Azure/webapps-deploy
-
-name: Build and deploy Node.js app to Azure Web App - billpayment-api
+name: Deploy Node.js app to Azure Web App - billpayment-api
 
 on:
   push:
@@ -12,15 +9,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
 
     steps:
-      # 1️⃣ Repo'yu çek
       - uses: actions/checkout@v4
 
-      # 2️⃣ Azure login
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -28,7 +20,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B9623A0B4F224D0E8BF3C2FDE408E440 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_65B003CC76A5443EB140819C8F852622 }}
 
-      # 3️⃣ Azure App Service'e SOURCE CODE deploy et
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
