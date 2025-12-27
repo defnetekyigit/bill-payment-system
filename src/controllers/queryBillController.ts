@@ -25,6 +25,7 @@ export const queryBillController = async (req: Request, res: Response) => {
       subscriber_no: bill.subscriber_no,
       month: bill.month,
       bill_total: bill.bill_total,
+      remaining_amount: bill.remaining_amount,
       paid_status: bill.status,
     });
   } catch (err) {
