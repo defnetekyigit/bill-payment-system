@@ -5,7 +5,7 @@ const client = new OpenAI({
 });
 
 export interface ParsedIntent {
-  intent: "QUERY_BILL" | "QUERY_BILL_DETAILED" | "PAY_BILL";
+  intent: "QUERY_BILL" | "QUERY_BILL_DETAILED" | "PAY_BILL" | "QUERY_UNPAID_BILLS";
   month: string;
   subscriber_no: string;
   amount?: number;
@@ -24,7 +24,7 @@ Do NOT add explanations.
 
 JSON format:
 {
-  "intent": "QUERY_BILL | QUERY_BILL_DETAILED | PAY_BILL",
+  "intent": "QUERY_BILL | QUERY_BILL_DETAILED | PAY_BILL | QUERY_UNPAID_BILLS",
   "month": "YYYY-MM",
   "subscriber_no": "123456",
   "amount": number | null
