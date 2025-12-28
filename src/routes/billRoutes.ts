@@ -168,7 +168,6 @@ router.get("/admin/bill/list", listBillsController);
 router.get(
   "/bill",
   authMiddleware,
-  rateLimitMiddleware,
   queryBillController
 );
 // Mobile Provider → Query Bill Detailed (Auth)
