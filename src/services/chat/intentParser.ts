@@ -16,25 +16,35 @@ export const parseIntent = async (message: string): Promise<ParsedIntent> => {
 You are an intent parser for a telecom bill payment system.
 
 Supported intents:
-- QUERY_BILL: User wants to see bill summary
-- QUERY_BILL_DETAILED: User wants bill breakdown/details
-- PAY_BILL: User wants to pay a bill
+- QUERY_BILL
+- QUERY_BILL_DETAILED
+- PAY_BILL
+
+Month mapping:
+January/Ocak=01
+February/Şubat=02
+March/Mart=03
+April/Nisan=04
+May/Mayıs=05
+June/Haziran=06
+July/Temmuz=07
+August/Ağustos=08
+September/Eylül=09
+October/Ekim=10
+November/Kasım=11
+December/Aralık=12
 
 Rules:
-- If user mentions "detail", "breakdown", use QUERY_BILL_DETAILED
-- If user mentions "pay", "payment", use PAY_BILL
-- Otherwise use QUERY_BILL
-- Month must be in YYYY-MM format if mentioned
+- If a month name is mentioned, convert it to YYYY-MM
+- Use year 2025 unless another year is explicitly mentioned
 - If no month is mentioned, set month to null
 - subscriber_no is always "123456"
-- Extract payment amount if user mentions it
+- Extract payment amount if present
 
 User message:
 "${message}"
 
-Return ONLY valid raw JSON.
-Do NOT use markdown.
-Do NOT add explanations.
+Return ONLY raw JSON.
 
 JSON format:
 {
