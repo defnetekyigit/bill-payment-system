@@ -151,7 +151,6 @@ import { Router } from "express";
 import { addBillController, listBillsController } from "../controllers/billController";
 import { queryBillController } from "../controllers/queryBillController";
 import { authMiddleware } from "../middleware/authMiddleware";
-import { rateLimitMiddleware } from "../middleware/rateLimitMiddleware";
 import { queryBillDetailedController } from "../controllers/billDetailedController";
 import { bankingQueryController } from "../controllers/bankingQueryController";
 import { payBillController } from "../controllers/payBillController";
