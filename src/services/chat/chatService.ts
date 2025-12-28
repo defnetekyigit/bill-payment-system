@@ -16,70 +16,35 @@ const getInternalToken = async (): Promise<string> => {
 };
 
 export const handleIntent = async (intent: ParsedIntent) => {
-  const safeIntent = {
-    intent: intent.intent,
-    month: intent.month ?? "2024-01",
-    subscriber_no: intent.subscriber_no ?? "123456",
-    amount: intent.amount ?? null,
-  };
+  const subscriber_no = intent.subscriber_no ?? "123456";
+  const month = intent.month;
+  const amount = intent.amount;
 
   const token = await getInternalToken();
   const headers = { Authorization: `Bearer ${token}` };
 
-  /**
-   * =========================
-   * QUERY BILL
-   * =========================
-   */
-  if (safeIntent.intent === "QUERY_BILL") {
+  if (intent.intent === "QUERY_BILL") {
     const res = await axios.get(`${API_BASE}/bill`, {
       headers,
-      params: {
-        subscriber_no: safeIntent.subscriber_no,
-        month: safeIntent.month,
-      },
+      params: { subscriber_no, month },
     });
 
-    if (!res.data || res.data.length === 0) {
-      return {
-        message: `No bill found for ${safeIntent.month}.`,
-        data: null,
-      };
-    }
-
-    const bill = res.data[0];
-
     return {
-      message:
-        bill.status === "Paid"
-          ? "Your bill is already paid."
-          : "Here is your bill information.",
-      data: bill,
+      message: "Here is your bill information.",
+      data: res.data,
     };
   }
 
-  /**
-   * =========================
-   * QUERY BILL DETAILED
-   * =========================
-   */
-  if (safeIntent.intent === "QUERY_BILL_DETAILED") {
+  if (intent.intent === "QUERY_BILL_DETAILED") {
     const res = await axios.get(`${API_BASE}/bill/detailed`, {
       headers,
       params: {
-        subscriber_no: safeIntent.subscriber_no,
-        month: safeIntent.month,
+        subscriber_no,
+        month,
         page: 1,
         limit: 5,
       },
     });
-
-    if (!res.data || res.data.length === 0) {
-      return {
-        message: `No detailed bill found for ${safeIntent.month}.`,
-        data: null,
-      };
-    }
 
     return {
       message: "Here is the detailed breakdown of your bill.",
@@ -87,56 +52,16 @@ export const handleIntent = async (intent: ParsedIntent) => {
     };
   }
 
-  /**
-   * =========================
-   * QUERY UNPAID BILLS (BONUS)
-   * =========================
-   */
-  if (safeIntent.intent === "QUERY_UNPAID_BILLS") {
-    const res = await axios.get(`${API_BASE}/bank/bill`, {
-      headers,
-      params: {
-        subscriber_no: safeIntent.subscriber_no,
-      },
-    });
 
-    if (!res.data || res.data.length === 0) {
-      return {
-        message: "You have no unpaid bills.",
-        data: [],
-      };
-    }
-
-    return {
-      message: "Here are your unpaid bills.",
-      data: res.data,
-    };
-  }
-
-  /**
-   * =========================
-   * PAY BILL
-   * =========================
-   */
-  if (safeIntent.intent === "PAY_BILL") {
+  if (intent.intent === "PAY_BILL") {
     const billRes = await axios.get(`${API_BASE}/bill`, {
       headers,
-      params: {
-        subscriber_no: safeIntent.subscriber_no,
-        month: safeIntent.month,
-      },
+      params: { subscriber_no, month },
     });
 
-    if (!billRes.data || billRes.data.length === 0) {
-      return {
-        message: "No bill found to pay.",
-        data: null,
-      };
-    }
+    const bill = billRes.data;
 
-    const bill = billRes.data[0];
-
-    if (bill.status === "Paid") {
+    if (bill.paid_status === "paid") {
       return {
         message: "This bill is already paid.",
         data: bill,
@@ -146,27 +71,19 @@ export const handleIntent = async (intent: ParsedIntent) => {
     const payRes = await axios.post(
       `${API_BASE}/pay`,
       {
-        subscriber_no: safeIntent.subscriber_no,
-        month: safeIntent.month,
-        amount: safeIntent.amount,
+        subscriber_no,
+        month,
+        amount,
       },
       { headers }
     );
 
     return {
-      message:
-        payRes.data.remaining_amount && payRes.data.remaining_amount > 0
-          ? `Partial payment successful. Remaining amount: ${payRes.data.remaining_amount} TL`
-          : "Payment successful.",
-      data: payRes.data,
+      message: payRes.data.message,
+      data: payRes.data.bill,
     };
   }
 
-  /**
-   * =========================
-   * FALLBACK
-   * =========================
-   */
   return {
     message: "Sorry, I couldn't understand your request.",
     data: null,
