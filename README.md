@@ -12,14 +12,45 @@ Web Admin Panel → Add bills & batch CSV upload
 All APIs are fully RESTful, versioned (/api/v1), documented with Swagger, and deployed on Azure App Service.
 The system uses JWT authentication, rate limiting, paging, and request/response logging as required.
 
+*AI Agent & Chat Gateway (Assignment 3)*
+As part of SE4458 Assignment 3, an AI Agent layer has been added on top of the existing
+Bill Payment APIs.
+This AI Agent enables users to interact with the system via natural language chat,
+instead of calling REST APIs manually.
+
+Architecture:
+- A Chat API endpoint (/api/v1/chat) acts as an API Gateway
+- Each user message is sent to an LLM (OpenAI GPT-4o-mini)
+- The LLM parses the intent and parameters (month, amount, etc.)
+- Parsed intent is mapped to existing Midterm APIs:
+  - Query Bill
+  - Query Bill Detailed
+  - Pay Bill
+- API responses are formatted and returned as chat messages
+
+Supported Intents:
+- QUERY_BILL
+- QUERY_BILL_DETAILED
+- PAY_BILL
+
+Assumptions:
+- The user is assumed to be authenticated
+- A constant subscriber number (123456) is used for demo purposes
+- This assumption is allowed per assignment instructions
+
+The AI Agent does not replace existing APIs; it orchestrates them via a chat interface.
+
 -> Source Code:
 https://github.com/defnetekyigit/bill-payment-system
 
+-> Source Code for mobil:
+https://github.com/defnetekyigit/bill-payment-system-ui
+
 -> Live API Base URL:
-https://billpayment-api-cnh8fubqbegrf5cm.francecentral-01.azurewebsites.net
+https://billpayment-api-v2.azurewebsites.net
 
 -> Swagger UI:
-https://billpayment-api-cnh8fubqbegrf5cm.francecentral-01.azurewebsites.net/swagger
+https://billpayment-api-v2.azurewebsites.net/swagger
 
 -> Demo video link:
 https://drive.google.com/file/d/19peym4oarVhb6_ETu1MoyWglkiEOd6ak/view?usp=sharing
